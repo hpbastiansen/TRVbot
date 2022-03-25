@@ -1,0 +1,212 @@
+[
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 3,
+    "day": 27
+  },
+  {
+    "type": "Papir",
+    "person": "143138160673685504",
+    "month": 4,
+    "day": 3
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 4,
+    "day": 10
+  },
+  {
+    "type": "Plast",
+    "person": "144138923403247616",
+    "month": 4,
+    "day": 17
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 4,
+    "day": 24
+  },
+  {
+    "type": "Papir",
+    "person": "176393515855511552",
+    "month": 5,
+    "day": 1
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 5,
+    "day": 8
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 5,
+    "day": 22
+  },
+  {
+    "type": "Papir",
+    "person": "176393515855511552",
+    "month": 5,
+    "day": 29
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 6,
+    "day": 5
+  },
+  {
+    "type": "Plast",
+    "person": "143138160673685504",
+    "month": 6,
+    "day": 12
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 6,
+    "day": 19
+  },
+  {
+    "type": "Papir",
+    "person": "144138923403247616",
+    "month": 6,
+    "day": 26
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 7,
+    "day": 3
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 7,
+    "day": 17
+  },
+  {
+    "type": "Papir",
+    "person": "144138923403247616",
+    "month": 7,
+    "day": 24
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 7,
+    "day": 31
+  },
+  {
+    "type": "Plast",
+    "person": "176393515855511552",
+    "month": 8,
+    "day": 7
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 8,
+    "day": 14
+  },
+  {
+    "type": "Papir",
+    "person": "143138160673685504",
+    "month": 8,
+    "day": 21
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 8,
+    "day": 28
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 9,
+    "day": 11
+  },
+  {
+    "type": "Papir",
+    "person": "143138160673685504",
+    "month": 9,
+    "day": 18
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 9,
+    "day": 25
+  },
+  {
+    "type": "Plast",
+    "person": "144138923403247616",
+    "month": 10,
+    "day": 2
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 10,
+    "day": 9
+  },
+  {
+    "type": "Papir",
+    "person": "176393515855511552",
+    "month": 10,
+    "day": 16
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 10,
+    "day": 23
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 11,
+    "day": 6
+  },
+  {
+    "type": "Papir",
+    "person": "176393515855511552",
+    "month": 11,
+    "day": 13
+  },
+  {
+    "type": "Restavfall",
+    "person": "144138923403247616",
+    "month": 11,
+    "day": 20
+  },
+  {
+    "type": "Plast",
+    "person": "143138160673685504",
+    "month": 11,
+    "day": 27
+  },
+  {
+    "type": "Restavfall",
+    "person": "176393515855511552",
+    "month": 12,
+    "day": 4
+  },
+  {
+    "type": "Papir",
+    "person": "144138923403247616",
+    "month": 12,
+    "day": 11
+  },
+  {
+    "type": "Restavfall",
+    "person": "143138160673685504",
+    "month": 12,
+    "day": 18
+  }
+]

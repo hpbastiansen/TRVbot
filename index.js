@@ -1,247 +1,39 @@
 require("dotenv").config();
 
+const fs = require("fs");
 const schedule = require("node-schedule");
 const Discord = require("discord.js");
 const client = new Discord.Client({
   intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES],
 });
 
-const garbage = [
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 3,
-    day: 27,
-  },
-  {
-    type: "Papir",
-    person: "143138160673685504",
-    month: 4,
-    day: 3,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 4,
-    day: 10,
-  },
-  {
-    type: "Plast",
-    person: "144138923403247616",
-    month: 4,
-    day: 17,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 4,
-    day: 24,
-  },
-  {
-    type: "Papir",
-    person: "176393515855511552",
-    month: 5,
-    day: 1,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 5,
-    day: 8,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 5,
-    day: 22,
-  },
-  {
-    type: "Papir",
-    person: "176393515855511552",
-    month: 5,
-    day: 29,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 6,
-    day: 5,
-  },
-  {
-    type: "Plast",
-    person: "143138160673685504",
-    month: 6,
-    day: 12,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 6,
-    day: 19,
-  },
-  {
-    type: "Papir",
-    person: "144138923403247616",
-    month: 6,
-    day: 26,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 7,
-    day: 3,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 7,
-    day: 17,
-  },
-  {
-    type: "Papir",
-    person: "144138923403247616",
-    month: 7,
-    day: 24,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 7,
-    day: 31,
-  },
-  {
-    type: "Plast",
-    person: "176393515855511552",
-    month: 8,
-    day: 7,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 8,
-    day: 14,
-  },
-  {
-    type: "Papir",
-    person: "143138160673685504",
-    month: 8,
-    day: 21,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 8,
-    day: 28,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 9,
-    day: 11,
-  },
-  {
-    type: "Papir",
-    person: "143138160673685504",
-    month: 9,
-    day: 18,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 9,
-    day: 25,
-  },
-  {
-    type: "Plast",
-    person: "144138923403247616",
-    month: 10,
-    day: 2,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 10,
-    day: 9,
-  },
-  {
-    type: "Papir",
-    person: "176393515855511552",
-    month: 10,
-    day: 16,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 10,
-    day: 23,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 11,
-    day: 6,
-  },
-  {
-    type: "Papir",
-    person: "176393515855511552",
-    month: 11,
-    day: 13,
-  },
-  {
-    type: "Restavfall",
-    person: "144138923403247616",
-    month: 11,
-    day: 20,
-  },
-  {
-    type: "Plast",
-    person: "143138160673685504",
-    month: 11,
-    day: 27,
-  },
-  {
-    type: "Restavfall",
-    person: "176393515855511552",
-    month: 12,
-    day: 4,
-  },
-  {
-    type: "Papir",
-    person: "144138923403247616",
-    month: 12,
-    day: 11,
-  },
-  {
-    type: "Restavfall",
-    person: "143138160673685504",
-    month: 12,
-    day: 18,
-  },
-];
+const ADMIN_ID = process.env.ADMIN_ID;
+const CHANNEL_ID = process.env.CHANNEL_ID;
+const CHANNEL_ID_TEST = process.env.CHANNEL_ID_TEST;
+
+const TESTING = true;
+
+let admin;
+let channel;
+
+const garbage = JSON.parse(fs.readFileSync("./garbage.json"));
 
 let tasks = [];
 
-client.on("ready", () => {
+client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  admin = await client.users.fetch(ADMIN_ID).catch(() => null);
+  channel = await client.channels
+    .fetch(TESTING ? CHANNEL_ID_TEST : CHANNEL_ID)
+    .catch(() => null);
+  setSubscribersTasks();
 });
 
 client.on("messageCreate", (msg) => {
   switch (msg.content) {
     case "!subscribe":
       if (!isSubscribed(msg.author.id)) {
-        const date = new Date();
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const hour = date.getHours();
-
-        const items = garbage.filter(
-          (item) =>
-            item.person === msg.author.id &&
-            (item.month > month ||
-              (item.month === month && item.day > day) ||
-              (item.day === day && hour < 20))
-        );
-        setTasks(msg, items);
+        addSubscriber(msg.author.id);
         msg.reply("Subscribed.");
       } else {
         msg.reply("You are already subscribed.");
@@ -251,28 +43,91 @@ client.on("messageCreate", (msg) => {
     case "!unsubscribe":
       if (isSubscribed(msg.author.id)) {
         cancelTasks(msg.author.id);
+        removeSubscriber(msg.author.id);
         msg.reply("Unsubscribed!");
       } else {
         msg.reply("You are not subscribed.");
       }
       break;
-    case "!tasks":
-      console.log(tasks);
+    case "!next":
+      const nextTask = getNextTask(msg.author.id);
+      if (!isSubscribed(msg.author.id)) {
+        msg.reply("You are not subscribed.");
+      } else if (nextTask) {
+        date = new Date(nextTask.time).toLocaleString("no");
+        msg.reply(`Next task: "${nextTask.type}" at ${date}`);
+      } else {
+        msg.reply("No tasks registered.");
+        admin.send(`No tasks registered for ${msg.author.id}`);
+      }
       break;
   }
 });
 
-function setTasks(msg, items) {
+function addSubscriber(subscriber) {
+  const subscribers = getSubscribers();
+  subscribers.push(subscriber);
+  fs.writeFileSync("./subscribers.json", JSON.stringify(subscribers));
+  setSubscribersTasks();
+}
+
+function removeSubscriber(subscriber) {
+  const subscribers = getSubscribers();
+  const index = subscribers.indexOf(subscriber);
+  subscribers.splice(index, 1);
+  fs.writeFileSync("./subscribers.json", JSON.stringify(subscribers));
+  setSubscribersTasks();
+}
+
+function getSubscribers() {
+  return JSON.parse(fs.readFileSync("./subscribers.json"));
+}
+
+function setSubscribersTasks() {
+  clearTasks();
+  const subscribers = getSubscribers();
+
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const hour = date.getHours();
+
+  subscribers.forEach((subscriber) =>
+    setTasks(
+      subscriber,
+      garbage.filter(
+        (item) =>
+          item.person === subscriber &&
+          (item.month > month ||
+            (item.month === month && item.day > day) ||
+            (item.day === day && hour < 20))
+      )
+    )
+  );
+}
+
+function getNextTask(person) {
+  const personTasks = tasks.filter((task) => task.person === person);
+  if (personTasks.length > 0) return personTasks[0];
+  return null;
+}
+
+function setTasks(id, items) {
   items.forEach((item) => {
     let task = schedule.scheduleJob(`0 20 ${item.day} ${item.month} *`, () => {
-      msg.channel.send(`<@${item.person}> ${item.type}`);
+      channel.send(`<@${item.person}> ${item.type}`);
     });
+
+    const date = new Date(2022, item.month - 1, item.day, 20);
+
     tasks.push({
-      person: item.person,
       task: task,
+      person: item.person,
+      type: item.type,
+      time: date.getTime(),
     });
   });
-  console.log(`Tasks set for user ${msg.author.id}!`);
+  console.log(`Tasks set for user ${id}!`);
 }
 
 function cancelTasks(user) {
@@ -282,8 +137,15 @@ function cancelTasks(user) {
   console.log(`Tasks cancelled for user ${user}!`);
 }
 
+function clearTasks() {
+  tasks.forEach((element) => element.task.cancel());
+  tasks = [];
+  console.log(`Cleared all tasks.`);
+}
+
 function isSubscribed(user) {
-  return tasks.filter((task) => task.person === user).length > 0;
+  const subscribers = getSubscribers();
+  return subscribers.includes(user);
 }
 
 client.login(process.env.CLIENT_TOKEN);
