@@ -11,7 +11,7 @@ const ADMIN_ID = process.env.ADMIN_ID;
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const CHANNEL_ID_TEST = process.env.CHANNEL_ID_TEST;
 
-const TESTING = true;
+const TESTING = false;
 
 let admin;
 let channel;
